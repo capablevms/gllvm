@@ -15,6 +15,8 @@ const input2 = `-Wl,--fatal-warnings -Wl,--build-id=sha1 -fPIC -Wl,-z,noexecstac
 
 const input3 = `1.c 2.c 3.c 4.c 5.c -Wl,--start-group 7.o 8.o 9.o -Wl,--end-group 10.c 11.c 12.c 13.c`
 
+const input4 = `-target riscv64-unknown-freebsd13 --sysroot=/home/cheriworker/cheri/output/rootfs-riscv64-purecap -B/home/cheriworker/cheri/output/sdk/bin -march=rv64imafdcxcheri -mabi=l64pc128d -mno-relax`
+
 func plto(input string, t *testing.T) {
 	cmds := strings.Fields(input)
 	parsed := shared.Parse(cmds)
@@ -38,4 +40,5 @@ func Test_parsing(t *testing.T) {
 	plto(input1, t)
 	pl(input2, t, 32)
 	pl(input3, t, 5)
+	pl(input4, t, 6)
 }

@@ -163,12 +163,11 @@ func Parse(argList []string) ParserResult {
 	var argsExactMatches = map[string]flagInfo{
 
 		"/dev/null": {0, pr.inputFileCallback}, //iam: linux kernel
-
-		"-":  {0, pr.printOnlyCallback},
-		"-o": {1, pr.outputFileCallback},
-		"-c": {0, pr.compileOnlyCallback},
-		"-E": {0, pr.preprocessOnlyCallback},
-		"-S": {0, pr.assembleOnlyCallback},
+		"-":         {0, pr.printOnlyCallback},
+		"-o":        {1, pr.outputFileCallback},
+		"-c":        {0, pr.compileOnlyCallback},
+		"-E":        {0, pr.preprocessOnlyCallback},
+		"-S":        {0, pr.assembleOnlyCallback},
 
 		"--verbose": {0, pr.verboseFlagCallback},
 		"--param":   {1, pr.defaultBinaryCallback},
@@ -244,6 +243,8 @@ func Parse(argList []string) ParserResult {
 		"-mindirect-branch-register":   {0, pr.compileUnaryCallback}, //iam: linux kernel stuff
 
 		"-mllvm": {1, pr.compileBinaryCallback}, //iam: chromium
+
+		"-mno-relax": {0, pr.compileLinkUnaryCallback}, // CHERI
 
 		"-A": {1, pr.compileBinaryCallback},
 		"-D": {1, pr.compileBinaryCallback},
@@ -351,6 +352,7 @@ func Parse(argList []string) ParserResult {
 
 		"-Wl,-dead_strip": {0, pr.warningLinkUnaryCallback},
 		"-dead_strip":     {0, pr.warningLinkUnaryCallback}, //iam: tor does this. We lose the bitcode :-(
+		"-target":         {1, pr.compileLinkBinaryCallback}, // cross-compiling, e.g. CHERI
 	}
 
 	// iam: this is a list because matching needs to be done in order.
@@ -386,6 +388,7 @@ func Parse(argList []string) ParserResult {
 		{`^-mmacosx-version-min=.+$`, flagInfo{0, pr.compileLinkUnaryCallback}},
 		{`^-mstack-alignment=.+$`, flagInfo{0, pr.compileUnaryCallback}},          //iam, linux kernel stuff
 		{`^-march=.+$`, flagInfo{0, pr.compileUnaryCallback}},                     //iam: linux kernel stuff
+		{`^-mabi=.+$`, flagInfo{0, pr.compileLinkUnaryCallback}},                  // CHERI
 		{`^-mregparm=.+$`, flagInfo{0, pr.compileUnaryCallback}},                  //iam: linux kernel stuff
 		{`^-mcmodel=.+$`, flagInfo{0, pr.compileUnaryCallback}},                   //iam: linux kernel stuff
 		{`^-mpreferred-stack-boundary=.+$`, flagInfo{0, pr.compileUnaryCallback}}, //iam: linux kernel stuff
