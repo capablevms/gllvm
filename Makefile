@@ -17,7 +17,7 @@ help:
 install: develop
 
 develop:
-	go install github.com/SRI-CSL/gllvm/cmd/...
+	go install github.com/capablevms/gllvm/cmd/...
 
 
 check: develop
