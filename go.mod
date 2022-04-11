@@ -1,3 +1,3 @@
-module github.com/SRI-CSL/gllvm
+module github.com/capablevms/gllvm
 
 go 1.16
