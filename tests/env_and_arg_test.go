@@ -2,9 +2,10 @@ package test
 
 import (
 	"fmt"
-	"github.com/SRI-CSL/gllvm/shared"
 	"os"
 	"testing"
+
+	"github.com/capablevms/gllvm/shared"
 )
 
 const (
