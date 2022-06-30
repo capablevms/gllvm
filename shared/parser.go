@@ -389,6 +389,7 @@ func Parse(argList []string) ParserResult {
 		{`^-mstack-alignment=.+$`, flagInfo{0, pr.compileUnaryCallback}},          //iam, linux kernel stuff
 		{`^-march=.+$`, flagInfo{0, pr.compileUnaryCallback}},                     //iam: linux kernel stuff
 		{`^-mabi=.+$`, flagInfo{0, pr.compileLinkUnaryCallback}},                  // CHERI
+		{`^-mcpu=.+$`, flagInfo{0, pr.compileLinkUnaryCallback}},                  // CHERI morello
 		{`^-mregparm=.+$`, flagInfo{0, pr.compileUnaryCallback}},                  //iam: linux kernel stuff
 		{`^-mcmodel=.+$`, flagInfo{0, pr.compileUnaryCallback}},                   //iam: linux kernel stuff
 		{`^-mpreferred-stack-boundary=.+$`, flagInfo{0, pr.compileUnaryCallback}}, //iam: linux kernel stuff
