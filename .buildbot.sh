@@ -11,23 +11,16 @@ CONFIG_FLAGS=
 if [ "$1" = "morello-purecap" ]; then
 	ARCH="morello"
 	CHERI=$HOME/cheri/output/"$ARCH"-sdk
-	CONFIG_FLAGS="-target aarch64-unknown-freebsd13 \
-	  --sysroot=${HOME}/cheri/output/rootfs-morello-purecap \
-	  -B${HOME}/cheri/output/morello-sdk/bin \
-	  -mcpu=rainier -march=morello+c64 -mabi=purecap"
 elif [ "$1" = "riscv64-purecap" ]; then
 	ARCH="riscv64"
 	CHERI=$HOME/cheri/output/sdk
-	CONFIG_FLAGS="-target riscv64-unknown-freebsd13 \
-	  --sysroot=${HOME}/cheri/output/rootfs-riscv64-purecap \
-	  -B${HOME}/output/sdk/bin -march=rv64imafdcxcheri \
-	  -mabi=l64pc128d -mno-relax"
 else
 	echo "Only purecap architectures, i.e. riscv64 and morello, are supported."
 	# Exit gracefully because we do not want the build to fail
 	exit 0
 fi
 
+CONFIG_FLAGS="--config cheribsd-${ARCH}-purecap.cfg"
 LLVM_COMPILER_PATH=$CHERI/bin
 CC=$LLVM_COMPILER_PATH/clang
 GLLVM_OBJCOPY=$LLVM_COMPILER_PATH/objcopy

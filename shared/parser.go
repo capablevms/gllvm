@@ -190,8 +190,8 @@ func Parse(argList []string) ParserResult {
 		"-no-integrated-as":      {0, pr.compileUnaryCallback},
 		"-integrated-as":         {0, pr.compileUnaryCallback},
 		"-no-canonical-prefixes": {0, pr.compileLinkUnaryCallback},
-
-		"--sysroot": {1, pr.compileLinkBinaryCallback}, //iam: musl stuff
+		"--config":               {1, pr.compileLinkBinaryCallback}, // CHERI
+		"--sysroot":              {1, pr.compileLinkBinaryCallback}, //iam: musl stuff
 
 		//<archaic flags>
 		"-no-cpp-precomp": {0, pr.compileUnaryCallback},
@@ -373,6 +373,7 @@ func Parse(argList []string) ParserResult {
 		{`^-I.+$`, flagInfo{0, pr.compileUnaryCallback}},
 		{`^-D.+$`, flagInfo{0, pr.compileUnaryCallback}},
 		{`^-B.+$`, flagInfo{0, pr.compileLinkUnaryCallback}},
+		{`^--config .+$`, flagInfo{0, pr.compileLinkUnaryCallback}}, // CHERI
 		{`^-isystem.+$`, flagInfo{0, pr.compileLinkUnaryCallback}},
 		{`^-U.+$`, flagInfo{0, pr.compileUnaryCallback}},
 		{`^-fsanitize=.+$`, flagInfo{0, pr.compileLinkUnaryCallback}},
